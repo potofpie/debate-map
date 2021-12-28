@@ -1,9 +1,15 @@
-import {FC} from 'react';
-import ReactFlow from 'react-flow-renderer';
+import {FC, useState} from 'react';
+import ReactFlow, { Controls, ControlButton } from 'react-flow-renderer';
 // import ReactPlayer from 'react-player';
+import {DateTime } from 'luxon';
+import {uid} from 'react-uid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
 
 
-const elements = [
+
+
+const elementsTemp = [
   {
     id: '1',
     type: 'input', 
@@ -33,9 +39,39 @@ const elements = [
 
 ];
 
-export const App:FC = () => (
-  <div className='App' >
-    <ReactFlow elements={elements} />
+export const App:FC = () => {
+
+  
+  const [elements, setElements] = useState(elementsTemp);
+
+  const addElement = () => {
+    
+    const myDateTime = DateTime.now()
+    const myDateTimeISO = myDateTime.toISO()
+
+    const temp = {
+      id: uid(myDateTimeISO),
+      type: 'output',
+      data: { label: 'Output Node' },
+      position: { x: 250, y: 250 },
+    }
+    setElements([...elements, temp])
+
+  }
+  
+  return (
+    
+    
+    <div className='App' >
+    <ReactFlow elements={elements} >
+      <Controls>
+      <ControlButton onClick={() => addElement()}>
+        <FontAwesomeIcon icon={faProjectDiagram} />
+      </ControlButton>
+      </Controls>
+
+    </ReactFlow>
   </div>
 );
+}
 
