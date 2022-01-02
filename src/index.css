@@ -20,8 +20,10 @@ html, body, #root {
 
 body {
   margin: 0;
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', */
+    /* monospace; */
+    font-family: Sans-Serif;
+
 }
 
 
