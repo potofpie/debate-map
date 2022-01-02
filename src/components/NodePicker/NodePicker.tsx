@@ -8,12 +8,13 @@ import YouTube, {PlayerVars, Options} from 'react-youtube';
 
 type Anchor = 'top' | 'right' | 'bottom' | 'right';
 interface INodePicker {
+  url: string;
   selectedElement: any;
   elements: any; 
   setElements: Function;
 
 }
-export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElements }) => {
+export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElements, url }) => {
   const findElement = (element: any) => element?.id === selectedElement?.id;
   const [label, setLabel] = useState()
   const [startTime, setStartTime] = useState(selectedElement?.data?.startTime)
@@ -95,9 +96,7 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
 
   return (
     <div>
-      {/* {(['right', 'right', 'top', 'bottom'] as const).map((anchor) => ( */}
         <div key={'right'}>
-          {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
           <Drawer
             anchor={'right'}
             open={selectedElement}
@@ -108,7 +107,6 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
             variant={'persistent'}
           >
             <Box
-              // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
               style={{display: 'flex', flexDirection: 'column', padding: 10}}
               onClick={toggleDrawer(selectedElement, false)}
               onKeyDown={toggleDrawer(selectedElement, false)}
@@ -142,7 +140,7 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
               </Typography>
               <input type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
             </div>
-            <YouTube  videoId="q6NnCiosNwE" className='youtube-player' opts={options}/>
+            <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
             <Typography variant='caption' style={{color: 'grey'}}>
               <b> Node ID: </b> {selectedElement?.id}
             </Typography>

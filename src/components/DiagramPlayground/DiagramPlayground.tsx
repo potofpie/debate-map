@@ -1,22 +1,17 @@
 import {FC, useState, useEffect} from 'react';
 import ReactFlow, { Controls, ControlButton, addEdge, removeElements } from 'react-flow-renderer';
-// import ReactPlayer from 'react-player';
-import {DateTime } from 'luxon';
-import {uid} from 'react-uid';
+import { DateTime } from 'luxon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faProjectDiagram, faCloudDownloadAlt, faFileImport } from '@fortawesome/free-solid-svg-icons'
 import {NodePicker} from '../NodePicker'
 import stringHash from "string-hash";
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import {debate} from '../../assets';
 
-// import useDeepCompareEffect from 'use-deep-compare-effect'
 
 
 
@@ -49,6 +44,9 @@ const elementsTemp = [
 ];
 
 export const DiagramPlayground:FC = () => {
+    const [filename, setFilename] = useState<any>('Did the titanic sink? 🚢');
+
+    const [url, setUrl] = useState<any>('https://www.youtube.com/watch?v=q6NnCiosNwE');
     const [elements, setElements] = useState<any>(elementsTemp);
     const [selectedElementId, setSelectedElementId] = useState();
 
@@ -92,24 +90,26 @@ export const DiagramPlayground:FC = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                <IconButton
-                    // size="large"
-                    edge="start"
-                    // color="inherit"
-                    aria-label="menu"
-                    sx={{ mr: 2 }}
-                >
-                    <img src={debate} style={{height: 35, width: 35, }} />
-                </IconButton>
+                <Tooltip title="▶️ Play!" placement="bottom">
+                    <IconButton
+                        // size="large"
+                        edge="start"
+                        // color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}
+                        >
+                        <img src={debate} style={{height: 35, width: 35, }} />
+                    </IconButton>
+                </Tooltip>
                 <div style={{display: 'flex', height: 'calc(100%)', flexDirection: 'column',  }}>
-                    <input placeholder='Name this document!' style={{marginTop: 5, fontSize: 16, backgroundColor: 'transparent', border: 'none' }}/>
-                    <input placeholder='YT URL' style={{margin: 5, fontSize: 10, backgroundColor: 'transparent',   border: 'none' }} />
+                    <input placeholder='Name this document!' value={filename}  onChange={(e: any) => setFilename(e.target.value)}  style={{marginTop: 5, fontSize: 16, backgroundColor: 'transparent', border: 'none' }}/>
+                    <input value={url} onChange={(e: any) => setUrl(e.target.value)} placeholder='YT URL' style={{margin: 5, fontSize: 10, backgroundColor: 'transparent',   border: 'none' }} />
                 </div>
                 
                 </Toolbar>
             </AppBar>
         </Box>
-        <NodePicker selectedElement={elements?.filter((e: any ) => e?.id === selectedElementId )[0]} setElements={setElements} elements={elements}/>
+        <NodePicker url={url} selectedElement={elements?.filter((e: any ) => e?.id === selectedElementId )[0]} setElements={setElements} elements={elements}/>
         <ReactFlow
             style={{height: 'calc(100% - 64px)'}}
             elements={elements}
