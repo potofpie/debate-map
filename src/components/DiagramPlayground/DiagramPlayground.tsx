@@ -19,7 +19,7 @@ const elementsTemp = [
   },
   {
     id: '2',
-    data: { label: <div>Default Node</div> },
+    data: { label: "Default Node" },
     position: { x: 100, y: 125 },
   },
   {
@@ -75,14 +75,14 @@ export const DiagramPlayground:FC = () => {
 
     return (
         <>
-        <NodePicker selectedElement={elements?.filter((e: any ) => e?.id === selectedElementId )[0] }/>
+        <NodePicker selectedElement={elements?.filter((e: any ) => e?.id === selectedElementId )[0]} setElements={setElements} elements={elements}/>
         <ReactFlow 
             elements={elements}
             onElementsRemove={onElementsRemove}
             onConnect={onConnect}
             onClickCapture={(event: any) => setSelectedElementId(event.target.getAttribute('data-id')) }
         >
-            <Controls>
+            <Controls style={{float: 'right'}}>
                 <ControlButton onClick={() => addElement()}>
                 <FontAwesomeIcon icon={faProjectDiagram} />
                 </ControlButton>

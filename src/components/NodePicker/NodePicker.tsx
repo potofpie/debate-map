@@ -1,22 +1,42 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
+import Typography from '@mui/material/Typography';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+type Anchor = 'top' | 'right' | 'bottom' | 'right';
+interface INodePicker {
+  selectedElement: any;
+  elements: any; 
+  setElements: Function;
 
-export const NodePicker:FC<{selectedElement: any}> = ({selectedElement}) => {
+}
+export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElements }) => {
+  const findElement = (element: any) => element?.id === selectedElement?.id;
+  const [label, setLabel] = useState()
+  
+  useEffect(() => {
+    setLabel(selectedElement?.data?.label)
+  },[selectedElement?.data?.label])
+
+  useEffect(() => {
+      const elementIndex =  elements.findIndex(findElement);
+      const temp = elements;
+      if(temp[elementIndex]){
+        console.log(temp[elementIndex])
+        temp[elementIndex].label = label
+        console.log(temp[elementIndex])
+        console.log(elements)
+
+        setElements(temp)
+      }
+  },[label])
+
+
+
+
+
   const [state, setState] = useState({
-    top: false,
-    left: false,
-    bottom: false,
     right: false,
   });
 
@@ -38,23 +58,43 @@ export const NodePicker:FC<{selectedElement: any}> = ({selectedElement}) => {
 
   return (
     <div>
-      {/* {(['left', 'right', 'top', 'bottom'] as const).map((anchor) => ( */}
-      {console.log(selectedElement)}
-        <div key={'left'}>
+      {/* {(['right', 'right', 'top', 'bottom'] as const).map((anchor) => ( */}
+        <div key={'right'}>
           {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
           <Drawer
-            anchor={'left'}
+            anchor={'right'}
             open={selectedElement}
-            onClose={toggleDrawer('left', false)}
+            onClose={ async () => { 
+              await toggleDrawer('right', false)
+              
+            }}
+            variant={'persistent'}
           >
-               <Box
+            <Box
               // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-              role="presentation"
+              style={{display: 'flex', flexDirection: 'column', padding: 10}}
               onClick={toggleDrawer(selectedElement, false)}
               onKeyDown={toggleDrawer(selectedElement, false)}
             >
-              {selectedElement?.id}
-              {selectedElement?.data?.label}
+
+            <TextareaAutosize
+              aria-label="minimum height"
+              minRows={3}
+              value={label}
+              onChange={(e: any) => {
+
+
+                setLabel(e.target.value)
+  
+
+              }
+               }
+              placeholder="Enter your label text here..."
+              style={{ maxWidth: 200, maxHeight: 50, minWidth: 200, minHeight: 50, border: 'none', resize: 'none' }}
+            />
+            <Typography variant='caption' style={{color: 'grey'}}>
+              Node ID: {selectedElement?.id}
+            </Typography>
 
             </Box>
           </Drawer>
