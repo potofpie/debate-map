@@ -9,6 +9,9 @@ html, body, #root {
 }
 
 
+.youtube-player {
+  width: 100%;
+}
 
 .App {
   flex: 1;

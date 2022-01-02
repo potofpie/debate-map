@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import YouTube, {PlayerVars, Options} from 'react-youtube';
+
 
 type Anchor = 'top' | 'right' | 'bottom' | 'right';
 interface INodePicker {
@@ -14,23 +16,58 @@ interface INodePicker {
 export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElements }) => {
   const findElement = (element: any) => element?.id === selectedElement?.id;
   const [label, setLabel] = useState()
+  const [startTime, setStartTime] = useState(selectedElement?.data?.startTime)
+  const [endTime, setEndTime] = useState(selectedElement?.data?.endTime)
+  const playerVars: PlayerVars = {
+    // autoplay: 1,
+    start: startTime,
+    end: endTime,
+
+  }
+  const options: Options = {
+    playerVars
+  }
   
   useEffect(() => {
     setLabel(selectedElement?.data?.label)
   },[selectedElement?.data?.label])
 
   useEffect(() => {
-      const elementIndex =  elements.findIndex(findElement);
-      const temp = elements;
-      if(temp[elementIndex]){
-        console.log(temp[elementIndex])
-        temp[elementIndex].label = label
-        console.log(temp[elementIndex])
-        console.log(elements)
+    setEndTime(selectedElement?.data?.endTime)
+  },[selectedElement?.data?.endTime])
 
-        setElements(temp)
-      }
+  useEffect(() => {
+    setStartTime(selectedElement?.data?.startTime)
+  },[selectedElement?.data?.startTime])
+
+  useEffect(() => {
+    const elementIndex =  elements.findIndex(findElement);
+    const temp = elements;
+
+    if(temp[elementIndex]){
+      temp[elementIndex].data.label = label;
+      setElements(temp);
+    }
   },[label])
+
+  useEffect(() => {
+    const elementIndex =  elements.findIndex(findElement);
+    const temp = elements;
+    if(temp[elementIndex]){
+      temp[elementIndex].data.startTime = startTime;
+      setElements(temp);
+    }
+  },[startTime])
+
+  useEffect(() => {
+    const elementIndex =  elements.findIndex(findElement);
+    const temp = elements;
+    if(temp[elementIndex]){
+      temp[elementIndex].data.endTime = endTime;
+      setElements(temp);
+    }
+  },[endTime])
+
 
 
 
@@ -92,8 +129,22 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
               placeholder="Enter your label text here..."
               style={{ maxWidth: 200, maxHeight: 50, minWidth: 200, minHeight: 50, border: 'none', resize: 'none' }}
             />
+            <div>
+
+              <Typography variant='caption' style={{color: 'grey'}}>
+                <b> Start Time: </b> 
+              </Typography>
+              <input type='number' value={startTime} onChange={(e: any) => setStartTime(e.target.value) } />
+            </div>
+            <div>
+              <Typography variant='caption' style={{color: 'grey'}}>
+                <b> End Time: </b> 
+              </Typography>
+              <input type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
+            </div>
+            <YouTube  videoId="q6NnCiosNwE" className='youtube-player' opts={options}/>
             <Typography variant='caption' style={{color: 'grey'}}>
-              Node ID: {selectedElement?.id}
+              <b> Node ID: </b> {selectedElement?.id}
             </Typography>
 
             </Box>
