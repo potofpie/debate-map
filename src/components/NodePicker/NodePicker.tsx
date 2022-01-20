@@ -1,9 +1,12 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useState, MouseEvent} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import YouTube, {PlayerVars, Options} from 'react-youtube';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import {banned, point, focus } from '../../assets'
 
 
 type Anchor = 'top' | 'right' | 'bottom' | 'right';
@@ -14,6 +17,38 @@ interface INodePicker {
   setElements: Function;
 
 }
+
+
+export const ColorToggleButton:FC = () => {
+  const [alignment, setAlignment] = useState('web');
+
+  const handleChange = (
+    event: MouseEvent<HTMLElement>,
+    newAlignment: string,
+  ) => {
+    setAlignment(newAlignment);
+  };
+
+  return (
+    <ToggleButtonGroup
+      size='small'
+      value={alignment}
+      exclusive
+      onChange={handleChange}
+    >
+      <ToggleButton value="rebuttal">
+        <img src={banned} style={{ height: 20, width: 20, }}/> 
+      </ToggleButton>
+      <ToggleButton value="point">
+        <img src={point} style={{ height: 20, width: 20, }}/> 
+      </ToggleButton>
+      <ToggleButton value="subtopic">
+        <img src={focus} style={{ height: 20, width: 20, }}/> 
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+}
+
 export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElements, url }) => {
   const findElement = (element: any) => element?.id === selectedElement?.id;
   const [label, setLabel] = useState()
@@ -111,19 +146,11 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
               onClick={toggleDrawer(selectedElement, false)}
               onKeyDown={toggleDrawer(selectedElement, false)}
             >
-
             <TextareaAutosize
               aria-label="minimum height"
               minRows={3}
               value={label}
-              onChange={(e: any) => {
-
-
-                setLabel(e.target.value)
-  
-
-              }
-               }
+              onChange={(e: any) => {setLabel(e.target.value);}}
               placeholder="Enter your label text here..."
               style={{ maxWidth: 200, maxHeight: 50, minWidth: 200, minHeight: 50, border: 'none', resize: 'none' }}
             />
@@ -140,7 +167,7 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
               </Typography>
               <input type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
             </div>
-            <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
+            {/* <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/> */}
             <Typography variant='caption' style={{color: 'grey'}}>
               <b> Node ID: </b> {selectedElement?.id}
             </Typography>

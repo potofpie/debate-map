@@ -1,10 +1,13 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import { DiagramPlayground } from './components';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import  { ReactFlowProvider} from 'react-flow-renderer';
+
 
 
 
 export const App:FC = () => {
+
 
   const theme = createTheme({
     palette: {
@@ -17,7 +20,10 @@ export const App:FC = () => {
   return (
   <div className='App' >
     <ThemeProvider theme={theme}>
-      <DiagramPlayground/>
+      <ReactFlowProvider>
+        <DiagramPlayground />
+        
+      </ReactFlowProvider>
     </ThemeProvider>
   </div>
 );
