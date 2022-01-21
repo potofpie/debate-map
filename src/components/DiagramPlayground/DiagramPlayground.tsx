@@ -63,7 +63,7 @@ export const DiagramPlayground:FC = () => {
 
     useEffect(() => {
         exportToFile()
-    },[exportToFile])
+    },[])
     
 
 
