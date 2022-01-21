@@ -1,29 +1,16 @@
-import {FC, useState, useEffect, useRef} from 'react';
-import ReactFlow, { Controls, ControlButton, addEdge, removeElements, useStore, useZoomPanHelper} from 'react-flow-renderer';
+import {FC, useState, useEffect, useCallback } from 'react';
+import ReactFlow, { Controls, ControlButton, addEdge, removeElements} from 'react-flow-renderer';
+import {VideoPlayer } from '../VideoPlayer'
 import { DateTime } from 'luxon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faProjectDiagram, faCloudDownloadAlt, faFileImport } from '@fortawesome/free-solid-svg-icons'
 import {NodePicker} from '../NodePicker'
 import stringHash from "string-hash";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import {debate} from '../../assets';
-import Modal from '@mui/material/Modal';
-import Draggable from 'react-draggable'; // The default
-
-import ReactPlayer from 'react-player'
+import {useDocument} from '../../context/docmentContext'
+import {Header} from '../../components/Header'
 
 
 
-interface test {
-    played: number;
-    playedSeconds: number;
-    loaded: number;
-    loadedSeconds: number;
-}
 
 
 
@@ -57,63 +44,26 @@ const elementsTemp = [
 
 export const DiagramPlayground:FC = () => {
 
-    const typlayer = useRef();
-    const [isPlaying, setIsPlaying] = useState<boolean>(false)
-    const { zoomIn, zoomOut, setCenter } = useZoomPanHelper();
-    const store = useStore();
+    const { documentDataControler  } = useDocument()!;
+    const { url  } = documentDataControler;
 
-
-    const focusNode = (curr: any) => {
-        const { nodes } = store.getState();
-        if (nodes.length) {
-            const node = nodes[0];
-            const foundNodes = nodes?.filter((n: any) => n?.data.startTime ===  Math.floor(curr)) 
-            // console.log(foundNodes)
-            const focusNode = foundNodes?.length != 0 ? foundNodes[0] : undefined
-            
-            if(!focusNode)
-                return
-            console.log(focusNode)
-
-    
-            const x = focusNode.__rf.position.x + focusNode.__rf.width / 2;
-            const y = focusNode.__rf.position.y + focusNode.__rf.height / 2;
-            const zoom = 1.85;
-        
-            setCenter(x, y, zoom);
-        }
-      };
-
-    const [filename, setFilename] = useState<any>('Did the titanic sink? 🚢');
-
-    const [url, setUrl] = useState<any>('https://www.youtube.com/watch?v=q6NnCiosNwE');
     const [elements, setElements] = useState<any>(elementsTemp);
     const [selectedElementId, setSelectedElementId] = useState();
-    const ref = useRef();
-
-
     const [downloadLink, setDownloadLink] = useState('')
+    
     const onElementsRemove = (elementsToRemove: any) => setElements((els: any) => removeElements(elementsToRemove, els));
     const onConnect = (params: any) => setElements((els: any) => addEdge(params, els));
 
-  
-    // const focusNode = () => {
-    //   const { nodes } = store.getState();
-  
-    //   if (nodes.length) {
-    //     const node = nodes[0];
-  
-    //     const x = node.__rf.position.x + node.__rf.width / 2;
-    //     const y = node.__rf.position.y + node.__rf.height / 2;
-    //     const zoom = 1.85;
-  
-    //     setCenter(x, y, zoom);
-    //   }
-    // };
+    const exportToFile = useCallback(
+    () => {
+        const data = new Blob([JSON.stringify(elements)], { type: 'text/plain' })
+        if (downloadLink !== '') window.URL.revokeObjectURL(downloadLink)
+        setDownloadLink(window.URL.createObjectURL(data))
+    },[elements,downloadLink])
 
     useEffect(() => {
         exportToFile()
-    },[JSON.stringify(elements)])
+    },[exportToFile])
     
 
 
@@ -136,79 +86,13 @@ export const DiagramPlayground:FC = () => {
         alert("import the file here!")
     }
 
-    const exportToFile = () => {
-        const data = new Blob([JSON.stringify(elements)], { type: 'text/plain' })
-        if (downloadLink !== '') window.URL.revokeObjectURL(downloadLink)
-        setDownloadLink(window.URL.createObjectURL(data))
-    }
 
-    const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        // width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-      };
+
 
     return (
         <>
-           { isPlaying &&      <Draggable
-        handle=".handle"
-        defaultPosition={{ x: 0, y: 0 }}
-        // bounds={{ left: '-100vw', right: 0 }}
-        // position={0}
-        // onDrag={handleDrag}
-        children={(
-          <Modal
-        open={isPlaying}
-        hideBackdrop={true}
-        onClose={() => setIsPlaying(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-            <div className='handle' style={{width: '100%', height: 40, backgroundColor: 'red'}}/>
-            <ReactPlayer controls={true} onProgress={(state: test) => focusNode(state?.playedSeconds)} url={url} />
-        </Box>
-      </Modal> )}
-           
-           />
-
-
-
-           
-           
-        //    <YouTube  onStateChange={(event: any) => {
-        //        const {target, data} = event
-        //        console.log({target, data})
-
-        //    }} videoId={url.split('=')[1] } className='youtube-player' /> 
-    }
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
-                    <Toolbar>
-                    <Tooltip title="▶️ Play!" placement="bottom">
-                        <IconButton
-                                edge="start"
-                                aria-label="menu"
-                                sx={{ mr: 2 }}
-                                onClick={() => setIsPlaying(!isPlaying)}
-                            >
-                            <img src={debate} style={{height: 35, width: 35, }} />
-                        </IconButton>
-                    </Tooltip>
-                    <div style={{display: 'flex', height: 'calc(100%)', flexDirection: 'column',  }}>
-                        <input placeholder='Name this document!' value={filename}  onChange={(e: any) => setFilename(e.target.value)}  style={{marginTop: 5, fontSize: 16, backgroundColor: 'transparent', border: 'none' }}/>
-                        <input value={url} onChange={(e: any) => setUrl(e.target.value)} placeholder='YT URL' style={{margin: 5, fontSize: 10, backgroundColor: 'transparent',   border: 'none' }} />
-                    </div>
-                    
-                    </Toolbar>
-                </AppBar>
-            </Box>
+            <VideoPlayer/>
+            <Header/>
             <NodePicker url={url} selectedElement={elements?.filter((e: any ) => e?.id === selectedElementId )[0]} setElements={setElements} elements={elements}/>
             <ReactFlow
                 style={{height: 'calc(100% - 64px)'}}
