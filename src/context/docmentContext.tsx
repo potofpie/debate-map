@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, FC } from 'react'
 import { useStore, useZoomPanHelper} from 'react-flow-renderer';
-
+import { elementsTemp } from '../mockdata/index'
 
 
 interface DocumentPlayerControler {
@@ -16,10 +16,16 @@ interface DocumentDataControler  {
     filename: string;
     setFilename: Function;
 
+    elements: any;
+    setElements: Function;
+
 }
 
 interface DiagramControler {
     focusNode: Function;
+
+    setSelectedElementId: Function; 
+    selectedElementId: any | undefined;
 }
 
 interface DocumentContextType {
@@ -37,6 +43,9 @@ export const DocumentProvider:FC = ({children}) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [url, setUrl] = useState<string>('https://www.youtube.com/watch?v=q6NnCiosNwE');
     const [filename, setFilename] = useState<any>('Did the titanic sink? 🚢');
+    const [selectedElementId, setSelectedElementId] = useState();
+    const [elements, setElements] = useState<any>(elementsTemp);
+
 
 
     const { setCenter } = useZoomPanHelper();
@@ -45,7 +54,6 @@ export const DocumentProvider:FC = ({children}) => {
         const { nodes } = store.getState();
         if (nodes.length) {
             const foundNodes = nodes?.filter((n: any) => n?.data.startTime ===  Math.floor(curr)) 
-            // console.log(foundNodes)
             const focusNode = foundNodes?.length !== 0 ? foundNodes[0] : undefined
             
             if(!focusNode)
@@ -62,8 +70,8 @@ export const DocumentProvider:FC = ({children}) => {
       };
 
     const documentPlayerControler: DocumentPlayerControler    = { setIsPlaying, isPlaying}
-    const documentDataControler: DocumentDataControler    = { setUrl, url, setFilename, filename}
-    const diagramControler: DiagramControler = { focusNode }
+    const documentDataControler: DocumentDataControler    = { setUrl, url, setFilename, filename, elements, setElements}
+    const diagramControler: DiagramControler = { focusNode, selectedElementId, setSelectedElementId}
 
 
     

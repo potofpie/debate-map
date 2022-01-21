@@ -167,7 +167,7 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
               </Typography>
               <input type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
             </div>
-            {/* <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/> */}
+            <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
             <Typography variant='caption' style={{color: 'grey'}}>
               <b> Node ID: </b> {selectedElement?.id}
             </Typography>
