@@ -1,64 +1,31 @@
-import {FC, useEffect, useState, MouseEvent} from 'react';
+import {FC, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import YouTube, {PlayerVars, Options} from 'react-youtube';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import {banned, point, focus } from '../../assets'
+import { useDocument } from '../../context';
+// import ToggleButton from '@mui/material/ToggleButton';
+// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+// import {banned, point, focus } from '../../assets'
 
 
 type Anchor = 'top' | 'right' | 'bottom' | 'right';
 interface INodePicker {
-  url: string;
-  selectedElement: any;
-  elements: any; 
-  setElements: Function;
-
+  
 }
 
+export const NodePicker:FC<INodePicker> = () => {
+  const { diagramControler, documentDataControler } = useDocument()!;
+  const { selectedElement } = diagramControler
+  const {url, updateElement } = documentDataControler
 
-export const ColorToggleButton:FC = () => {
-  const [alignment, setAlignment] = useState('web');
-
-  const handleChange = (
-    event: MouseEvent<HTMLElement>,
-    newAlignment: string,
-  ) => {
-    setAlignment(newAlignment);
-  };
-
-  return (
-    <ToggleButtonGroup
-      size='small'
-      value={alignment}
-      exclusive
-      onChange={handleChange}
-    >
-      <ToggleButton value="rebuttal">
-        <img src={banned} style={{ height: 20, width: 20, }}/> 
-      </ToggleButton>
-      <ToggleButton value="point">
-        <img src={point} style={{ height: 20, width: 20, }}/> 
-      </ToggleButton>
-      <ToggleButton value="subtopic">
-        <img src={focus} style={{ height: 20, width: 20, }}/> 
-      </ToggleButton>
-    </ToggleButtonGroup>
-  );
-}
-
-export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElements, url }) => {
-  const findElement = (element: any) => element?.id === selectedElement?.id;
   const [label, setLabel] = useState()
   const [startTime, setStartTime] = useState(selectedElement?.data?.startTime)
   const [endTime, setEndTime] = useState(selectedElement?.data?.endTime)
   const playerVars: PlayerVars = {
-    // autoplay: 1,
     start: startTime,
-    end: endTime,
-
+    end: endTime
   }
   const options: Options = {
     playerVars
@@ -77,32 +44,22 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
   },[selectedElement?.data?.startTime])
 
   useEffect(() => {
-    const elementIndex =  elements.findIndex(findElement);
-    const temp = elements;
 
-    if(temp[elementIndex]){
-      temp[elementIndex].data.label = label;
-      setElements(temp);
-    }
-  },[label])
+    console.log({selectedElement})
+    const tempData = {
+      ...selectedElement?.data,
+      startTime,
+      endTime,
+      label
 
-  useEffect(() => {
-    const elementIndex =  elements.findIndex(findElement);
-    const temp = elements;
-    if(temp[elementIndex]){
-      temp[elementIndex].data.startTime = startTime;
-      setElements(temp);
-    }
-  },[startTime])
 
-  useEffect(() => {
-    const elementIndex =  elements.findIndex(findElement);
-    const temp = elements;
-    if(temp[elementIndex]){
-      temp[elementIndex].data.endTime = endTime;
-      setElements(temp);
+
     }
-  },[endTime])
+    console.log()
+    console.log({...selectedElement, data: tempData})
+    updateElement( {...selectedElement, data: tempData} )
+
+  },[label, startTime, endTime, selectedElement, updateElement])
 
 
 
@@ -143,8 +100,8 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
           >
             <Box
               style={{display: 'flex', flexDirection: 'column', padding: 10}}
-              onClick={toggleDrawer(selectedElement, false)}
-              onKeyDown={toggleDrawer(selectedElement, false)}
+              onClick={toggleDrawer('right', false)}
+              onKeyDown={toggleDrawer('right', false)}
             >
             <TextareaAutosize
               aria-label="minimum height"
@@ -175,7 +132,6 @@ export const NodePicker:FC<INodePicker> = ({selectedElement, elements, setElemen
             </Box>
           </Drawer>
         </div>
-      {/* ))} */}
     </div>
   );
 }

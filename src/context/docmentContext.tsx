@@ -1,6 +1,10 @@
 import { createContext, useContext, useState, FC } from 'react'
 import { useStore, useZoomPanHelper} from 'react-flow-renderer';
 import { elementsTemp } from '../mockdata/index'
+import { DateTime } from 'luxon';
+import stringHash from "string-hash";
+
+
 
 
 interface DocumentPlayerControler {
@@ -18,14 +22,18 @@ interface DocumentDataControler  {
 
     elements: any;
     setElements: Function;
+    addElement: Function;
+    updateElement: Function;
+    findElementByID: Function;
 
 }
 
 interface DiagramControler {
     focusNode: Function;
 
-    setSelectedElementId: Function; 
-    selectedElementId: any | undefined;
+    setSelectedElement: Function; 
+    selectedElement: any | undefined;
+    clearNodePicker: Function;
 }
 
 interface DocumentContextType {
@@ -43,8 +51,25 @@ export const DocumentProvider:FC = ({children}) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [url, setUrl] = useState<string>('https://www.youtube.com/watch?v=q6NnCiosNwE');
     const [filename, setFilename] = useState<any>('Did the titanic sink? 🚢');
-    const [selectedElementId, setSelectedElementId] = useState();
+    const [selectedElement, setSelectedElement] = useState<any>();
     const [elements, setElements] = useState<any>(elementsTemp);
+    console.log(selectedElement)
+
+    const clearNodePicker =
+    () =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+  
+      setSelectedElement(undefined);
+    };
+  
+  
 
 
 
@@ -69,9 +94,39 @@ export const DocumentProvider:FC = ({children}) => {
         }
       };
 
+    const findElementByID = (id: any) => elements?.filter((e: any ) => e?.id === id )[0]
+    
+
+    const updateElement =(element: any) => {
+
+        const elementIndex =  elements.findIndex((element: any) => element?.id === selectedElement?.id );
+        const temp = elements;
+    
+        if(temp[elementIndex]){
+          temp[elementIndex] = element
+          setElements(temp);
+        }
+    }
+
+
+
+    const addElement = () => {
+        const myDateTime = DateTime.now()
+        const myDateTimeISO = myDateTime.toISO()
+        const temp = {
+            id: String(stringHash(myDateTimeISO)),
+            data: {
+                label: 'Enter text here!',         
+                startTime: 0,
+                endTime: 15, 
+            },
+            position: { x: 250, y: 250 },
+        }
+        setElements([...elements, temp])
+    }
     const documentPlayerControler: DocumentPlayerControler    = { setIsPlaying, isPlaying}
-    const documentDataControler: DocumentDataControler    = { setUrl, url, setFilename, filename, elements, setElements}
-    const diagramControler: DiagramControler = { focusNode, selectedElementId, setSelectedElementId}
+    const documentDataControler: DocumentDataControler    = { setUrl, url, setFilename, filename, elements, setElements, addElement, updateElement, findElementByID}
+    const diagramControler: DiagramControler = { focusNode, selectedElement, setSelectedElement, clearNodePicker}
 
 
     
