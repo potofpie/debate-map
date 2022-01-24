@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, FC } from 'react'
+import { createContext, useContext, useState, useEffect, FC } from 'react'
 import { useStore, useZoomPanHelper} from 'react-flow-renderer';
 import { elementsTemp } from '../mockdata/index'
 import { DateTime } from 'luxon';
@@ -71,6 +71,7 @@ export const DocumentProvider:FC = ({children}) => {
 
     const { setCenter } = useZoomPanHelper();
     const store = useStore();
+    // useEffect(() => {console.log(elements)},[JSON.stringify(elements)])
     const focusNode = (curr: any) => {
         const { nodes } = store.getState();
         if (nodes.length) {
@@ -93,15 +94,15 @@ export const DocumentProvider:FC = ({children}) => {
     
 
     const updateElement =(element: any) => {
-
         const elementIndex =  elements.findIndex((element: any) => element?.id === selectedElement?.id );
+        // console.log(elementIndex)
         const temp = elements;
-    
-        if(temp[elementIndex]){
-          temp[elementIndex] = element
-          setElements(temp);
-        }
+        temp[elementIndex] = element
+        console.log(temp)
+        setElements(temp);
     }
+
+
 
 
 

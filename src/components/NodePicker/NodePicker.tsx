@@ -18,7 +18,7 @@ interface INodePicker {
 export const NodePicker:FC<INodePicker> = () => {
   const { diagramControler, documentDataControler } = useDocument()!;
   const { selectedElement } = diagramControler
-  const {url, updateElement } = documentDataControler
+  const { updateElement } = documentDataControler
 
   const [label, setLabel] = useState()
   const [startTime, setStartTime] = useState(selectedElement?.data?.startTime)
@@ -44,14 +44,19 @@ export const NodePicker:FC<INodePicker> = () => {
   },[selectedElement?.data?.startTime])
 
   useEffect(() => {
+    if(!Boolean(selectedElement)){
+      return
+    }
     const tempData = {
       ...selectedElement?.data,
       startTime,
       endTime,
       label
     }
+    // console.log(selectedElement)
+    // console.log({...selectedElement, data: tempData})
     updateElement( {...selectedElement, data: tempData} )
-  },[label, startTime, endTime, selectedElement, updateElement])
+  },[label, startTime, endTime])
 
 
 
@@ -83,7 +88,7 @@ export const NodePicker:FC<INodePicker> = () => {
         <div key={'right'}>
           <Drawer
             anchor={'right'}
-            open={selectedElement}
+            open={Boolean(selectedElement)}
             onClose={ async () => { 
               await toggleDrawer('right', false)
               
@@ -116,7 +121,7 @@ export const NodePicker:FC<INodePicker> = () => {
               </Typography>
               <input type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
             </div>
-            <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
+            {/* <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/> */}
             <Typography variant='caption' style={{color: 'grey'}}>
               <b> Node ID: </b> {selectedElement?.id}
             </Typography>

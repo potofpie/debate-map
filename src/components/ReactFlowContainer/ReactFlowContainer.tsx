@@ -1,4 +1,4 @@
-import {FC } from 'react';
+import {FC, useEffect, useState } from 'react';
 import ReactFlow, { Controls, ControlButton, addEdge, removeElements} from 'react-flow-renderer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faProjectDiagram,  } from '@fortawesome/free-solid-svg-icons'
@@ -12,11 +12,19 @@ export const ReactFlowContainer:FC = () => {
     const onElementsRemove = (elementsToRemove: any) => setElements((els: any) => removeElements(elementsToRemove, els));
     const onConnect = (params: any) => setElements((els: any) => addEdge(params, els));
 
+    const [receivedElements, setReceivedElements]  = useState([]);
+
+
+    useEffect(()=>{
+        console.log(elements)
+        setReceivedElements(elements)
+    },[JSON.stringify(elements), setReceivedElements])
+    
     return (
 
             <ReactFlow
                 style={{height: 'calc(100% - 64px)'}}
-                elements={elements}
+                elements={receivedElements}
                 onElementsRemove={onElementsRemove}
                 onConnect={onConnect}
                 onClickCapture={(event: any) => setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) }
@@ -25,17 +33,6 @@ export const ReactFlowContainer:FC = () => {
                     <ControlButton onClick={() => addElement()}>
                     <FontAwesomeIcon icon={faProjectDiagram} />
                     </ControlButton>
-                    {/* <a
-                    download='debate-map.json'
-                    href={downloadLink}
-                    >
-                    <ControlButton>
-                        <FontAwesomeIcon icon={faCloudDownloadAlt} />
-                    </ControlButton>
-                </a>
-                <ControlButton onClick={() => importFile()}>
-                    <FontAwesomeIcon icon={faFileImport} />
-                </ControlButton> */}
                 </Controls>
             </ReactFlow>
     );
