@@ -53,11 +53,7 @@ export const DocumentProvider:FC = ({children}) => {
     const [filename, setFilename] = useState<any>('Did the titanic sink? 🚢');
     const [selectedElement, setSelectedElement] = useState<any>();
     const [elements, setElements] = useState<any>(elementsTemp);
-    console.log(selectedElement)
-
-    const clearNodePicker =
-    () =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
+    const clearNodePicker = () => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
         event.type === 'keydown' &&
         ((event as React.KeyboardEvent).key === 'Tab' ||
@@ -83,7 +79,6 @@ export const DocumentProvider:FC = ({children}) => {
             
             if(!focusNode)
                 return
-            console.log(focusNode)
 
     
             const x = focusNode.__rf.position.x + focusNode.__rf.width / 2;

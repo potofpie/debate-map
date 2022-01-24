@@ -19,10 +19,7 @@ export const ReactFlowContainer:FC = () => {
                 elements={elements}
                 onElementsRemove={onElementsRemove}
                 onConnect={onConnect}
-                onClickCapture={(event: any) => { 
-                    console.log(event.target.getAttribute('data-id'))
-                    setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) 
-                }}
+                onClickCapture={(event: any) => setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) }
             >
                 <Controls style={{float: 'right'}}>
                     <ControlButton onClick={() => addElement()}>

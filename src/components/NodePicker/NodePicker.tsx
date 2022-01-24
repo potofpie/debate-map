@@ -44,21 +44,13 @@ export const NodePicker:FC<INodePicker> = () => {
   },[selectedElement?.data?.startTime])
 
   useEffect(() => {
-
-    console.log({selectedElement})
     const tempData = {
       ...selectedElement?.data,
       startTime,
       endTime,
       label
-
-
-
     }
-    console.log()
-    console.log({...selectedElement, data: tempData})
     updateElement( {...selectedElement, data: tempData} )
-
   },[label, startTime, endTime, selectedElement, updateElement])
 
 
