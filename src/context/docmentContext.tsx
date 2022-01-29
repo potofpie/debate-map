@@ -110,11 +110,12 @@ export const DocumentProvider:FC = ({children}) => {
 
 
 
-    const addElement = () => {
+    const addElement = (type='default') => {
         const myDateTime = DateTime.now()
         const myDateTimeISO = myDateTime.toISO()
         const temp = {
             id: String(stringHash(myDateTimeISO)),
+            type: type,
             data: {
                 label: 'Enter text here!',         
                 startTime: 0,

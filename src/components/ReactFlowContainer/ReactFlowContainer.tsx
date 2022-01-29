@@ -1,7 +1,8 @@
 import {FC, useEffect, useState } from 'react';
-import ReactFlow, { Controls, ControlButton, addEdge, removeElements} from 'react-flow-renderer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faProjectDiagram,  } from '@fortawesome/free-solid-svg-icons'
+import ReactFlow, { Controls, addEdge, removeElements} from 'react-flow-renderer';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faProjectDiagram,  } from '@fortawesome/free-solid-svg-icons'
+// ControlButton,
 import { SuportingNode, OpossingNode, IdeaNode, InsufficientNode} from './index';
 
 import {useDocument} from '../../context/docmentContext';
@@ -22,7 +23,7 @@ const StyledReactFlow = styled(ReactFlow)`
 export const ReactFlowContainer:FC = () => {
     const { diagramControler, documentDataControler } = useDocument()!
     const { setSelectedElement  } = diagramControler
-    const {elements, setElements, addElement, findElementByID} = documentDataControler    
+    const {elements, setElements, findElementByID} = documentDataControler    
     const onElementsRemove = (elementsToRemove: any) => setElements((els: any) => removeElements(elementsToRemove, els));
     const onConnect = (params: any) => setElements((els: any) => addEdge(params, els));
 
@@ -32,7 +33,8 @@ export const ReactFlowContainer:FC = () => {
     useEffect(()=>{
         console.log(elements)
         setReceivedElements(elements)
-    },[JSON.stringify(elements), setReceivedElements])
+
+    },[setReceivedElements, elements])
     
     return (
 
@@ -44,9 +46,9 @@ export const ReactFlowContainer:FC = () => {
                 onClickCapture={(event: any) => { console.log(event.target.getAttribute('data-id')); setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) }}
             >
                 <StyledControls>
-                    <ControlButton onClick={() => addElement()}>
+                    {/* <ControlButton onClick={() => addElement()}>
                     <FontAwesomeIcon icon={faProjectDiagram} />
-                    </ControlButton>
+                    </ControlButton> */}
                 </StyledControls>
             </StyledReactFlow>
     );

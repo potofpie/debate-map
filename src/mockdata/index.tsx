@@ -15,7 +15,7 @@ export const elementsTemp = [
         endTime: 65,
     },
 
-    position: { x: 250, y: 25 },
+    position: { x: 1000, y: 25 },
   },
     {
       id: '1',
@@ -41,7 +41,7 @@ export const elementsTemp = [
           endTime: 65,
       },
   
-      position: { x: 400, y: 25 },
+      position: { x: 700, y: 25 },
     },
     {
       id: '3',
