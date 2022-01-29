@@ -7,6 +7,7 @@ import {VideoPlayer } from './components/VideoPlayer'
 import {NodePicker} from './components/NodePicker';
 import {Header} from './components/Header';
 import { ReactFlowContainer } from './components/ReactFlowContainer';
+import {DiagramActions} from './components/DiagramActions'
 
 
 
@@ -29,6 +30,7 @@ export const App:FC = () => {
              <DocumentProvider>
 
               <Header/>
+              <DiagramActions/>
               <ReactFlowContainer/>
 
               <NodePicker   />
