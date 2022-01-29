@@ -2,6 +2,8 @@ import {FC, useEffect, useState } from 'react';
 import ReactFlow, { Controls, ControlButton, addEdge, removeElements} from 'react-flow-renderer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faProjectDiagram,  } from '@fortawesome/free-solid-svg-icons'
+import { SuportingNode, OpossingNode, IdeaNode, InsufficientNode} from './index';
+
 import {useDocument} from '../../context/docmentContext';
 import { styled } from '@mui/system';;
 
@@ -35,10 +37,11 @@ export const ReactFlowContainer:FC = () => {
     return (
 
             <StyledReactFlow
+                nodeTypes={{ SuportingNode, OpossingNode, IdeaNode, InsufficientNode}}
                 elements={receivedElements}
                 onElementsRemove={onElementsRemove}
                 onConnect={onConnect}
-                onClickCapture={(event: any) => setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) }
+                onClickCapture={(event: any) => { console.log(event.target.getAttribute('data-id')); setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) }}
             >
                 <StyledControls>
                     <ControlButton onClick={() => addElement()}>
