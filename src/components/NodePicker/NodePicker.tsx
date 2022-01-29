@@ -5,15 +5,35 @@ import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import YouTube, {PlayerVars, Options} from 'react-youtube';
 import { useDocument } from '../../context';
-// import ToggleButton from '@mui/material/ToggleButton';
-// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-// import {banned, point, focus } from '../../assets'
+import { styled } from '@mui/system';
+
+
 
 
 type Anchor = 'top' | 'right' | 'bottom' | 'right';
 interface INodePicker {
   
 }
+
+
+
+const StyledTypography = styled(Typography)`
+  color: grey;
+`
+const StyledTextareaAutosize = styled(TextareaAutosize)`
+  max-width: 200px; 
+  max-height: 50px; 
+  min-width: 200px'
+  min-height: 50px; 
+  border: none; 
+  resize: none; 
+`
+const StyledBox = styled(Box)`
+  display: 'flex'; 
+  flex-direction: 'column';
+  padding: 10px;
+`
+
 
 export const NodePicker:FC<INodePicker> = () => {
   const { diagramControler, documentDataControler } = useDocument()!;
@@ -95,38 +115,36 @@ export const NodePicker:FC<INodePicker> = () => {
             }}
             variant={'persistent'}
           >
-            <Box
-              style={{display: 'flex', flexDirection: 'column', padding: 10}}
+            <StyledBox
               onClick={toggleDrawer('right', false)}
               onKeyDown={toggleDrawer('right', false)}
             >
-            <TextareaAutosize
+            <StyledTextareaAutosize
               aria-label="minimum height"
               minRows={3}
               value={label}
               onChange={(e: any) => {setLabel(e.target.value);}}
               placeholder="Enter your label text here..."
-              style={{ maxWidth: 200, maxHeight: 50, minWidth: 200, minHeight: 50, border: 'none', resize: 'none' }}
             />
             <div>
 
-              <Typography variant='caption' style={{color: 'grey'}}>
+              <StyledTypography variant='caption' >
                 <b> Start Time: </b> 
-              </Typography>
+              </StyledTypography>
               <input type='number' value={startTime} onChange={(e: any) => setStartTime(e.target.value) } />
             </div>
             <div>
-              <Typography variant='caption' style={{color: 'grey'}}>
+              <StyledTypography variant='caption' >
                 <b> End Time: </b> 
-              </Typography>
+              </StyledTypography>
               <input type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
             </div>
             {/* <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/> */}
-            <Typography variant='caption' style={{color: 'grey'}}>
+            <StyledTypography variant='caption' >
               <b> Node ID: </b> {selectedElement?.id}
-            </Typography>
+            </StyledTypography>
 
-            </Box>
+            </StyledBox>
           </Drawer>
         </div>
     </div>

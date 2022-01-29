@@ -14,9 +14,17 @@ const StyledBox = styled(Box)`
     transform: translate(-50%, -50%);
     border: 2px solid #000;
     box-shadow: 24px;
+    padding: 10px;
+    background-color: white;
+
 `
 
 
+const Handle = styled('div')`
+    width: 100%; 
+    height: 40px; 
+    background-color: red;
+`
 
 
 
@@ -32,7 +40,7 @@ export const VideoPlayer:FC = () => {
 
     return (
         <Draggable
-            handle=".handle"
+            handle="#handle"
             defaultPosition={{ x: 0, y: 0 }}
             children={(
                 <Modal
@@ -43,7 +51,7 @@ export const VideoPlayer:FC = () => {
                     aria-describedby="modal-modal-description"
                 >
                 <StyledBox>
-                    <div className='handle' style={{width: '100%', height: 40, backgroundColor: 'red'}}/>
+                    <Handle id='handle'/>
                     <ReactPlayer controls={true} onProgress={(state: any) => focusNode(state?.playedSeconds)} url={url} />
                 </StyledBox>
                 </Modal> 

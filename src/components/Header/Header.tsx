@@ -6,11 +6,34 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {debate} from '../../assets';
 import {useDocument} from '../../context/docmentContext'
+import { styled } from '@mui/system';
 
 
+const HeaderInput = styled('div')`
+    display: flex;
+    height: calc(100%);
+    flex-direction: column;
+`
+
+const URLInput = styled('input')`
+  margin: 5px; 
+  font-size: 10px; 
+  background-color: transparent;   
+  border: none;
+`
+
+const TitleInput = styled('input')`
+    margin-top: 5px; 
+    font-size: 16px; 
+    background-color: transparent;
+    border: none;
+`
 
 
-
+const PlayButtion = styled('img')`
+    height: 35px; 
+    width: 35px; 
+`
 
 export const Header:FC = () => {
     const { documentPlayerControler, documentDataControler  } = useDocument()!;
@@ -29,13 +52,14 @@ export const Header:FC = () => {
                                 sx={{ mr: 2 }}
                                 onClick={() => setIsPlaying(!isPlaying)}
                             >
-                            <img alt={'debate-logo'} src={debate} style={{height: 35, width: 35, }} />
+                            <PlayButtion alt={'debate-logo'} src={debate}  />
                         </IconButton>
                     </Tooltip>
-                    <div style={{display: 'flex', height: 'calc(100%)', flexDirection: 'column',  }}>
-                        <input placeholder='Name this document!' value={filename}  onChange={(e: any) => setFilename(e.target.value)}  style={{marginTop: 5, fontSize: 16, backgroundColor: 'transparent', border: 'none' }}/>
-                        <input value={url} onChange={(e: any) => setUrl(e.target.value)} placeholder='YT URL' style={{margin: 5, fontSize: 10, backgroundColor: 'transparent',   border: 'none' }} />
-                    </div>
+                    <HeaderInput >
+                        <TitleInput placeholder='Name this document!' value={filename}  onChange={(e: any) => setFilename(e.target.value)}  />
+                        <URLInput value={url} onChange={(e: any) => setUrl(e.target.value)} placeholder='YT URL' 
+                         />
+                    </HeaderInput>
                     </Toolbar>
                 </AppBar>
             </Box>

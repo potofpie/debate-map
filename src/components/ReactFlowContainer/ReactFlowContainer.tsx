@@ -2,7 +2,19 @@ import {FC, useEffect, useState } from 'react';
 import ReactFlow, { Controls, ControlButton, addEdge, removeElements} from 'react-flow-renderer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faProjectDiagram,  } from '@fortawesome/free-solid-svg-icons'
-import {useDocument} from '../../context/docmentContext'
+import {useDocument} from '../../context/docmentContext';
+import { styled } from '@mui/system';;
+
+
+
+
+
+const StyledControls = styled(Controls)`
+    float: right;
+`
+const StyledReactFlow = styled(ReactFlow)`
+    height: calc(100% - 64px);
+`
 
 
 export const ReactFlowContainer:FC = () => {
@@ -22,19 +34,18 @@ export const ReactFlowContainer:FC = () => {
     
     return (
 
-            <ReactFlow
-                style={{height: 'calc(100% - 64px)'}}
+            <StyledReactFlow
                 elements={receivedElements}
                 onElementsRemove={onElementsRemove}
                 onConnect={onConnect}
                 onClickCapture={(event: any) => setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) }
             >
-                <Controls style={{float: 'right'}}>
+                <StyledControls>
                     <ControlButton onClick={() => addElement()}>
                     <FontAwesomeIcon icon={faProjectDiagram} />
                     </ControlButton>
-                </Controls>
-            </ReactFlow>
+                </StyledControls>
+            </StyledReactFlow>
     );
 }
 
