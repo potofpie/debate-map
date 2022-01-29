@@ -94,13 +94,25 @@ export const DocumentProvider:FC = ({children}) => {
     
 
     const updateElement =(element: any) => {
+        // const elementIndex =  elements.findIndex();
+        // // console.log(elementIndex)
+        // const temp = elements;
+        // temp[elementIndex] = element
+        // console.log(temp)
+        // setElements(temp);
         const elementIndex =  elements.findIndex((element: any) => element?.id === selectedElement?.id );
-        // console.log(elementIndex)
         const temp = elements;
-        temp[elementIndex] = element
-        console.log(temp)
-        setElements(temp);
+        if(temp[elementIndex]){
+          temp[elementIndex].data.label = element.data.label;
+          temp[elementIndex].data.startTime = element.data.startTime;
+          temp[elementIndex].data.endTime = element.data.endTime;
+
+
+          setElements(temp);
+        }
+    
     }
+
 
 
 
