@@ -25,7 +25,10 @@ export const ReactFlowContainer:FC = () => {
     const { setSelectedElement  } = diagramControler
     const {elements, setElements, findElementByID} = documentDataControler    
     const onElementsRemove = (elementsToRemove: any) => setElements((els: any) => removeElements(elementsToRemove, els));
-    const onConnect = (params: any) => setElements((els: any) => addEdge(params, els));
+    const onConnect = (params: any) => setElements((els: any) => { 
+        console.log({params, els})
+        addEdge(params, els); 
+    });
 
     const [receivedElements, setReceivedElements]  = useState([]);
 
