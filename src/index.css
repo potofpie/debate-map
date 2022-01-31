@@ -20,9 +20,10 @@ html, body, #root {
 
 body {
   margin: 0;
-  /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', */
-    /* monospace; */
-    font-family: Sans-Serif;
+  /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; */
+    font-family:  "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    
 
 }
 

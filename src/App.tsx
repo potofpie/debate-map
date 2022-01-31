@@ -8,6 +8,8 @@ import {NodePicker} from './components/NodePicker';
 import {Header} from './components/Header';
 import { ReactFlowContainer } from './components/ReactFlowContainer';
 import {DiagramActions} from './components/DiagramActions'
+import Divider from '@mui/material/Divider';
+
 
 
 
@@ -30,6 +32,8 @@ export const App:FC = () => {
              <DocumentProvider>
 
               <Header/>
+              {/* <Divider style={{margin: 5}}/> */}
+
               <DiagramActions/>
               <ReactFlowContainer/>
 

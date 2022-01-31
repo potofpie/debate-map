@@ -17,8 +17,10 @@ const StyledControls = styled(Controls)`
 `
 const StyledReactFlow = styled(ReactFlow)`
     height: calc(100% - 64px);
+    background-color: white;
 `
 
+  
 
 export const ReactFlowContainer:FC = () => {
     const { diagramControler, documentDataControler } = useDocument()!

@@ -1,11 +1,13 @@
 import {FC, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import YouTube, {PlayerVars, Options} from 'react-youtube';
 import { useDocument } from '../../context';
 import { styled } from '@mui/system';
+
 
 
 
@@ -21,10 +23,11 @@ const StyledTypography = styled(Typography)`
   color: grey;
 `
 const StyledTextareaAutosize = styled(TextareaAutosize)`
-  max-width: 200px; 
+  max-width: 300px; 
   max-height: 50px; 
-  min-width: 200px'
+  min-width: 300px;
   min-height: 50px; 
+  background: transparent;
   border: none; 
   resize: none; 
 `
@@ -32,6 +35,10 @@ const StyledBox = styled(Box)`
   display: 'flex'; 
   flex-direction: 'column';
   padding: 10px;
+  background-color: #f6f8fa;
+  height: 100%;
+
+
 `
 
 
@@ -105,7 +112,7 @@ export const NodePicker:FC<INodePicker> = () => {
 
   return (
     <div>
-        <div key={'right'}>
+        <div key={'right'}  >
           <Drawer
             anchor={'right'}
             open={Boolean(selectedElement)}
@@ -131,13 +138,13 @@ export const NodePicker:FC<INodePicker> = () => {
               <StyledTypography variant='caption' >
                 <b> Start Time: </b> 
               </StyledTypography>
-              <input type='number' value={startTime} onChange={(e: any) => setStartTime(e.target.value) } />
+              <input style={{background: 'transparent', border: "none" }}  type='number' value={startTime} onChange={(e: any) => setStartTime(e.target.value) } />
             </div>
             <div>
               <StyledTypography variant='caption' >
                 <b> End Time: </b> 
               </StyledTypography>
-              <input type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
+              <input style={{background: 'transparent', border: "none" }} type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
             </div>
             {/* <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/> */}
             <StyledTypography variant='caption' >

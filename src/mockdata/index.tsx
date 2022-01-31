@@ -5,30 +5,6 @@
 
 
 export const elementsTemp = [
-  {
-    id: '123',
-
-    data: 
-    { 
-        label: 'People think about the movie when they hear titanic and this clouds there judgment.',
-        startTime: 60,
-        endTime: 65,
-    },
-
-    position: { x: 1000, y: 25 },
-  },
-  {
-    id: '122',
-
-    data: 
-    { 
-        label: 'People think about the movie when they hear titanic and this clouds there judgment.',
-        startTime: 60,
-        endTime: 65,
-    },
-
-    position: { x: 1000, y: 25 },
-  },
     {
       id: '1',
       type: "OpossingNode",
@@ -40,7 +16,7 @@ export const elementsTemp = [
           endTime: 65,
       },
   
-      position: { x: 250, y: 25 },
+      position: { x: 250, y: 100 },
     },
     {
       id: '4',
@@ -53,7 +29,7 @@ export const elementsTemp = [
           endTime: 65,
       },
   
-      position: { x: 700, y: 25 },
+      position: { x: 250, y: 200 },
     },
     {
       id: '3',
@@ -66,7 +42,7 @@ export const elementsTemp = [
           endTime: 400,
       },
   
-      position: { x: 600, y: 200 },
+      position: { x: 250, y: 300 },
     },
     {
       id: '2',
@@ -78,7 +54,7 @@ export const elementsTemp = [
           endTime: 85,
       },
   
-      position: { x: 300, y: 300 },
+      position: { x: 250, y: 400 },
     },
     // { id: 'e2-4', source: '1', target: '2' }
   
