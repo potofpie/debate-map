@@ -1,5 +1,6 @@
 import {FC, useEffect, useState } from 'react';
-import ReactFlow, { Controls, addEdge, removeElements} from 'react-flow-renderer';
+import ReactFlow, { Controls, addEdge, removeElements, Background} from 'react-flow-renderer';
+
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faProjectDiagram,  } from '@fortawesome/free-solid-svg-icons'
 // ControlButton,
@@ -50,6 +51,9 @@ export const ReactFlowContainer:FC = () => {
                 onConnect={onConnect}
                 onClickCapture={(event: any) => { console.log(event.target.getAttribute('data-id')); setSelectedElement(findElementByID(event.target.getAttribute('data-id'))) }}
             >
+                <Background
+                    gap={40}
+                    size={1} />
                 <StyledControls>
                     {/* <ControlButton onClick={() => addElement()}>
                     <FontAwesomeIcon icon={faProjectDiagram} />
