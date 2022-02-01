@@ -2,8 +2,16 @@ import {FC} from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import  { ReactFlowProvider} from 'react-flow-renderer';
 import {DocumentProvider} from './context/docmentContext'
-import {Login} from "./components/AuthenticationPages/" 
+import {AuthProvider} from './context/authContext'
 
+import {Login} from "./components/AuthenticationPages/" 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import { ApplicationRouter } from './ApplicationRouter'
 
 import {VideoPlayer } from './components/VideoPlayer'
 import {NodePicker} from './components/NodePicker';
@@ -29,24 +37,16 @@ export const App:FC = () => {
 
   return (
     <div className='App' >
+      <AuthProvider>
+
         <ThemeProvider theme={theme}>
           <ReactFlowProvider>
              <DocumentProvider>
-
-              <Header/>
-              <Divider />
-
-              <DiagramActions/>
-              <ReactFlowContainer/>
-
-              <NodePicker   />
-              <VideoPlayer/>
-              {/* <Login/> */}
-
-
+                <ApplicationRouter/>
             </DocumentProvider>
           </ReactFlowProvider>
         </ThemeProvider>
+      </AuthProvider>
       </div>
 );
 }
