@@ -1,0 +1,30 @@
+.Login {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* background-color: whitesmoke; */
+  background-color: #3f51b5;
+}
+
+.Login-field {
+    width: 80%;
+    margin: 15px; 
+}
+
+.Login-card {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  background-color: whitesmoke;
+  box-shadow: 0 10px 10px 0 rgba(53, 12, 54, 0.2);
+  width: 25%;
+  height: 85%;
+  min-width: 260px;
+  max-width: 360px;
+  max-height: 525px;
+  justify-content: space-evenly;
+  align-items: center;
+
+}

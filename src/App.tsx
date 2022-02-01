@@ -2,6 +2,8 @@ import {FC} from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import  { ReactFlowProvider} from 'react-flow-renderer';
 import {DocumentProvider} from './context/docmentContext'
+import {Login} from "./components/AuthenticationPages/" 
+
 
 import {VideoPlayer } from './components/VideoPlayer'
 import {NodePicker} from './components/NodePicker';
@@ -39,6 +41,8 @@ export const App:FC = () => {
 
               <NodePicker   />
               <VideoPlayer/>
+              {/* <Login/> */}
+
 
             </DocumentProvider>
           </ReactFlowProvider>
