@@ -1,34 +1,56 @@
-import {FC} from 'react';
-import { Handle, Position } from 'react-flow-renderer';
+import  {FC} from 'react';
+import  { Handle, Position } from 'react-flow-renderer';
 import { CustomNodeProps } from './CustomNodeProps';
+import { styled } from '@mui/system';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 
 
 
 
-export const IdeaNode:FC<CustomNodeProps> = ({ data, id, selected }) => {
-    const customNodeStyles = {
-        borderStyle: "dashed",
-        borderColor: "#006E90",
-        borderWidth: selected ? 2 : 1
-    };
+const StyledNode = styled('div')`
+border-radius: 3px;
+border-style: solid;
+border-width: 1px;
+color: #222;
+font-size: 12px;
+text-align: center;
+width: 250px;
+background: #EDFBFF;
+`
+
+
+
+
+export const IdeaNode:FC<CustomNodeProps> = ({ data,id,selected }) => {
+  const customNodeStyles = {
+      borderColor: "#A5C5CF",
+      display: 'flex',
+      borderWidth: 1,
+      boxShadow: !selected ? "none" : "0 4px 8px 0 rgba(0,0,0,0.2)",
+      borderRadius: 5,
+      overflow: "hidden"
+  };
+  
+  
   return (
-    <div  className='react-flow__node-default' data-id={id} style={customNodeStyles}>
-      {/* <Handle type="target" position={Position.Left} style={{ borderRadius: 0 }} /> */}
-      <EmojiObjectsIcon style={{color: "#006E90"}}/>
-      <div>{data.label}    </div>
+    <StyledNode   data-id={id} style={customNodeStyles}>
+      <div style={{backgroundColor: "#006E90", padding: 10, "display" : 'flex', "justifyContent": "center", "alignItems": "center",}}>
+        <EmojiObjectsIcon fontSize="small" style={{color: "white"}}/>
+      </div>
+
+      <div style={{"display" : 'flex', "justifyContent": "center", "alignItems": "center", width: "100%", padding: 10}}>
+        <div>{data.label}</div>
+      </div>
       <Handle
         type="source"
         position={Position.Top}
         id="a"
-        // style={{ top: '30%', borderRadius: 0 }}
       />
       <Handle
-        type="source"
+        type="target"
         position={Position.Bottom}
         id="b"
-        // style={{ top: '70%', borderRadius: 0 }}
       />
-    </div>
+    </StyledNode>
   );
 };

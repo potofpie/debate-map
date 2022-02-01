@@ -5,5 +5,5 @@ export * from './OpossingNode';
 // export * from './SupportingNode';
 export * from './SuportingNode';
 
-export * from './IdeaNodev2';
+export * from './IdeaNode';
 export * from './InsufficientNode'

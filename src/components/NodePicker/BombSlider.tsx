@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {FC, useState} from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -6,6 +6,8 @@ import Slider from '@mui/material/Slider';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import IconButton from '@mui/material/IconButton';
+import {useDocument} from '../../context/docmentContext'
+import { useEffect } from 'react';
 
 
 const TinyText = styled(Typography)({
@@ -15,12 +17,29 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-export function MusicPlayerSlider() {
+
+export const VideoPlayerSlider:FC = () => {
   const theme = useTheme();
-  const duration = 60 * 120; // seconds
-  const [position, setPosition] = React.useState<number[]>([100, 500]);
-  const [view, setView] = React.useState<number[]>([0, 1800]);
-  const [paused, setPaused] = React.useState(false);
+  const {documentDataControler, diagramControler} = useDocument()!
+  const { selectedElement } = diagramControler
+  const { updateElement } = documentDataControler
+  const [position, setPosition] = useState<number[]>([0, 0]);
+  const [view, setView] = useState<number[]>([0, 1800]);
+
+
+    useEffect(() => {
+        setPosition([selectedElement?.data?.startTime, selectedElement?.data?.endTime])
+    },[selectedElement])
+
+
+    useEffect(() => {
+        const tempData = {
+            ...selectedElement?.data,
+            startTime: position[0], 
+            endTime: position[1]
+          }
+        updateElement({ ...selectedElement,data: tempData})
+    },[position, selectedElement, updateElement])
   const handleChange = (event: Event, newValue: number | number[]) => {
 
     setPosition(newValue as number[]);

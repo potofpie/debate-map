@@ -94,6 +94,8 @@ export const DocumentProvider:FC = ({children}) => {
     
 
     const updateElement =(element: any) => {
+        console.log(element)
+        console.log(elements)
         const elementIndex =  elements.findIndex((element: any) => element?.id === selectedElement?.id );
         const temp = elements;
         if(temp[elementIndex]){

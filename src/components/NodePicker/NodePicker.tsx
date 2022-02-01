@@ -1,16 +1,15 @@
 import {FC, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-
+// import Cross from '@mui/icon/Cross';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import YouTube, {PlayerVars, Options} from 'react-youtube';
-import {MusicPlayerSlider} from './BombSlider'
+import { VideoPlayerSlider } from './BombSlider'
 import { useDocument } from '../../context';
 import { styled } from '@mui/system';
-
-import Slider from '@mui/material/Slider';
-
 
 
 type Anchor = 'top' | 'right' | 'bottom' | 'right';
@@ -39,7 +38,6 @@ const StyledBox = styled(Box)`
   background-color: #f6f8fa;
   height: 100%;
 
-
 `
 
 
@@ -48,14 +46,9 @@ const StyledBox = styled(Box)`
 
 export const NodePicker:FC<INodePicker> = () => {
   const { diagramControler, documentDataControler } = useDocument()!;
-  const { selectedElement } = diagramControler
+  const { selectedElement, setSelectedElement } = diagramControler
   const { updateElement, url } = documentDataControler
-
-  const [value, setValue] = useState<number[]>([20, 37]);
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
-  };
+  // const [value, setValue] = useState<number[]>([20, 37]);
 
   const [label, setLabel] = useState()
   const [startTime, setStartTime] = useState(selectedElement?.data?.startTime)
@@ -90,8 +83,6 @@ export const NodePicker:FC<INodePicker> = () => {
       endTime,
       label
     }
-    // console.log(selectedElement)
-    // console.log({...selectedElement, data: tempData})
     updateElement( {...selectedElement, data: tempData} )
   },[label, startTime, endTime])
 
@@ -136,33 +127,24 @@ export const NodePicker:FC<INodePicker> = () => {
               onClick={toggleDrawer('right', false)}
               onKeyDown={toggleDrawer('right', false)}
             >
-            <StyledTextareaAutosize
-              aria-label="minimum height"
-              minRows={3}
-              value={label}
-              onChange={(e: any) => {setLabel(e.target.value);}}
-              placeholder="Enter your label text here..."
-            />
-            <div>
-
-              <StyledTypography variant='caption' >
-                Start Time: 
+              <StyledTypography variant='caption'  >
+              <IconButton style={{float: "right"}}  onClick={() => setSelectedElement(false)}>
+                <CloseIcon/>
+              </IconButton>                         
+                Node ID:  {selectedElement?.id}
               </StyledTypography>
-              <input style={{background: 'transparent', border: "none", color: "grey", width: '70px'  }}  type='number' value={startTime} onChange={(e: any) => setStartTime(e.target.value) } />
-            </div>
-            <div>
-              <StyledTypography variant='caption' >
-               End Time: 
-              </StyledTypography>
-              <input style={{background: 'transparent', border: "none", color: "grey", width: '70px' }} type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
-            </div>
-            <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
-            <MusicPlayerSlider />
-            <StyledTypography variant='caption' >
-               Node ID:  {selectedElement?.id}
-            </StyledTypography>
-
+              <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
+              <VideoPlayerSlider />
+              <StyledTextareaAutosize
+                aria-label="minimum height"
+                minRows={3}
+                value={label}
+                onChange={(e: any) => {setLabel(e.target.value);}}
+                placeholder="Enter your label text here..."
+              />
             </StyledBox>
+
+
           </Drawer>
         </div>
     </div>

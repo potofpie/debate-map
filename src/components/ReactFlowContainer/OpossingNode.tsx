@@ -1,10 +1,10 @@
 import  {FC} from 'react';
 import  { Handle, Position } from 'react-flow-renderer';
-import HelpIcon from '@mui/icons-material/Help';
+// import HelpIcon from '@mui/icons-material/Help';
 import { CustomNodeProps } from './CustomNodeProps';
 import { styled } from '@mui/system';
 // import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import AddTaskIcon from '@mui/icons-material/AddTask';
+// import AddTaskIcon from '@mui/icons-material/AddTask';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 
 
@@ -49,7 +49,7 @@ export const OpossingNode:FC<CustomNodeProps> = ({ data,id,selected }) => {
         id="a"
       />
       <Handle
-        type="source"
+        type="target"
         position={Position.Bottom}
         id="b"
       />
