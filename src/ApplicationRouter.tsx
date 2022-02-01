@@ -28,28 +28,23 @@ import Divider from '@mui/material/Divider';
 
 
 export const ApplicationRouter:FC = () => {
-    const { auth, user  } =  useAuth()!
+    const { auth, user, logout  } =  useAuth()!
+
+
 
     useEffect(()=> {
-        console.log(auth)
-        console.log(process.env.REACT_APP_SHOULD_AUTHENTICATE, user)
+        console.log({ login : process.env.REACT_APP_SHOULD_AUTHENTICATE && !user } )
+        console.log({ home : process.env.REACT_APP_SHOULD_AUTHENTICATE  } )
     },[user])
 
 
   return (
+
     <Router>
         <Routes>
-            <Route path="/login" element={
-                process.env.REACT_APP_SHOULD_AUTHENTICATE && !user ?
-                <Login/>
-                :
-                <Navigate replace to="/" />
-            
-            
-            }></Route>
             <Route path="/"
                 element={
-                    !process.env.REACT_APP_SHOULD_AUTHENTICATE || user ?
+                    process.env.REACT_APP_SHOULD_AUTHENTICATE === 'false' || user ?
                     <>
                         <Header/>
                         <Divider />
@@ -63,6 +58,14 @@ export const ApplicationRouter:FC = () => {
                 
             }>
             </Route>
+            <Route path="/login" element={
+                process.env.REACT_APP_SHOULD_AUTHENTICATE === 'true' && !user ?
+                <Login/>
+                :
+                <Navigate replace to="/" />
+            
+            
+            }></Route>
         </Routes>
     </Router>
 );
