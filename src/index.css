@@ -5,7 +5,8 @@ html, body, #root {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background-color: #f2f0e6;
+  /* background-color: #f2f0e6; */
+  font-family:  "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 
@@ -27,4 +28,11 @@ body {
 
 }
 
+
+textarea, input {
+  margin: 0;
+  /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; */
+    font-family:  "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+}
 

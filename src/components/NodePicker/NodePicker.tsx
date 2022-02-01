@@ -5,10 +5,11 @@ import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import YouTube, {PlayerVars, Options} from 'react-youtube';
+import {MusicPlayerSlider} from './BombSlider'
 import { useDocument } from '../../context';
 import { styled } from '@mui/system';
 
-
+import Slider from '@mui/material/Slider';
 
 
 
@@ -42,10 +43,19 @@ const StyledBox = styled(Box)`
 `
 
 
+
+
+
 export const NodePicker:FC<INodePicker> = () => {
   const { diagramControler, documentDataControler } = useDocument()!;
   const { selectedElement } = diagramControler
-  const { updateElement } = documentDataControler
+  const { updateElement, url } = documentDataControler
+
+  const [value, setValue] = useState<number[]>([20, 37]);
+
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number[]);
+  };
 
   const [label, setLabel] = useState()
   const [startTime, setStartTime] = useState(selectedElement?.data?.startTime)
@@ -136,19 +146,20 @@ export const NodePicker:FC<INodePicker> = () => {
             <div>
 
               <StyledTypography variant='caption' >
-                <b> Start Time: </b> 
+                Start Time: 
               </StyledTypography>
-              <input style={{background: 'transparent', border: "none" }}  type='number' value={startTime} onChange={(e: any) => setStartTime(e.target.value) } />
+              <input style={{background: 'transparent', border: "none", color: "grey", width: '70px'  }}  type='number' value={startTime} onChange={(e: any) => setStartTime(e.target.value) } />
             </div>
             <div>
               <StyledTypography variant='caption' >
-                <b> End Time: </b> 
+               End Time: 
               </StyledTypography>
-              <input style={{background: 'transparent', border: "none" }} type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
+              <input style={{background: 'transparent', border: "none", color: "grey", width: '70px' }} type='number' value={endTime} onChange={(e: any) => setEndTime(e.target.value) } />
             </div>
-            {/* <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/> */}
+            <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
+            <MusicPlayerSlider />
             <StyledTypography variant='caption' >
-              <b> Node ID: </b> {selectedElement?.id}
+               Node ID:  {selectedElement?.id}
             </StyledTypography>
 
             </StyledBox>

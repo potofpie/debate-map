@@ -32,7 +32,7 @@ export const App:FC = () => {
              <DocumentProvider>
 
               <Header/>
-              {/* <Divider style={{margin: 5}}/> */}
+              <Divider />
 
               <DiagramActions/>
               <ReactFlowContainer/>
