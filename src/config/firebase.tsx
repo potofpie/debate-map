@@ -7,8 +7,8 @@ import {
   getAuth, 
   
 } from "firebase/auth";
-import env from 'react-dotenv'
-console.log(env)
+// import env from 'react-dotenv'
+// console.log(env)
 
 
 

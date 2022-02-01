@@ -37,8 +37,10 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f .env react-scripts start",
+    "start:auth": "env-cmd -f .env.auth react-scripts start",
+    "build": "env-cmd -f .env react-scripts build",
+    "build:auth": "env-cmd -f .env.auth react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
