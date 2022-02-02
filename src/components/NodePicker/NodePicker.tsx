@@ -48,7 +48,7 @@ export const NodePicker:FC<INodePicker> = () => {
   const { diagramControler, documentDataControler } = useDocument()!;
   const { selectedElement, setSelectedElement } = diagramControler
   const { updateElement, url } = documentDataControler
-  // const [value, setValue] = useState<number[]>([20, 37]);
+  const [position, setPosition] = useState<number[]>([0, 0]);
 
   const [label, setLabel] = useState()
   const [startTime, setStartTime] = useState(selectedElement?.data?.startTime)
@@ -72,23 +72,6 @@ export const NodePicker:FC<INodePicker> = () => {
   useEffect(() => {
     setStartTime(selectedElement?.data?.startTime)
   },[selectedElement?.data?.startTime])
-
-  useEffect(() => {
-    if(!Boolean(selectedElement)){
-      return
-    }
-    const tempData = {
-      ...selectedElement?.data,
-      startTime,
-      endTime,
-      label
-    }
-    updateElement( {...selectedElement, data: tempData} )
-  },[label, startTime, endTime])
-
-
-
-
 
 
   const [state, setState] = useState({
@@ -128,13 +111,22 @@ export const NodePicker:FC<INodePicker> = () => {
               onKeyDown={toggleDrawer('right', false)}
             >
               <StyledTypography variant='caption'  >
-              <IconButton style={{float: "right"}}  onClick={() => setSelectedElement(false)}>
+              <IconButton style={{float: "right"}}  onClick={() => {
+                setSelectedElement(false)
+                const tempData = {
+                  ...selectedElement?.data,
+                  startTime: position[0],
+                  endTime: position[1],
+                  label
+                }
+                updateElement( {...selectedElement, data: tempData} )
+              }}>
                 <CloseIcon/>
               </IconButton>                         
                 Node ID:  {selectedElement?.id}
               </StyledTypography>
               <YouTube  videoId={url.split('=')[1] } className='youtube-player' opts={options}/>
-              <VideoPlayerSlider />
+              <VideoPlayerSlider setPosition={setPosition} position={position} />
               <StyledTextareaAutosize
                 aria-label="minimum height"
                 minRows={3}

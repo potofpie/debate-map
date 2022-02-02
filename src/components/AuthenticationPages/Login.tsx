@@ -1,6 +1,6 @@
 
 
-import {FC, useState, useEffect} from 'react';
+import {FC, useState} from 'react';
 import { useAuth } from '../../context/authContext'
 import { Card, Typography, Button, TextField, InputAdornment } from '@mui/material'
 import PanoramaPhotosphereSelectIcon from '@mui/icons-material/PanoramaPhotosphereSelect';
@@ -25,7 +25,7 @@ const AuthenticationPageContainer = styled('div')`
 export const Login:FC = () => {
   const [email, setEmail] = useState<string | undefined>('')
   const [password, setPassword] = useState<string | undefined>('')
-  const { auth, login } = useAuth()!;
+  const { login } = useAuth()!;
   
   
   const onLogin = () => {

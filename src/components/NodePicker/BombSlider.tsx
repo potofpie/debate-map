@@ -18,28 +18,19 @@ const TinyText = styled(Typography)({
 });
 
 
-export const VideoPlayerSlider:FC = () => {
+export const VideoPlayerSlider:FC<{position: number[], setPosition: Function} > = ({position, setPosition}) => {
   const theme = useTheme();
-  const {documentDataControler, diagramControler} = useDocument()!
+  const { diagramControler} = useDocument()!
   const { selectedElement } = diagramControler
-  const { updateElement } = documentDataControler
-  const [position, setPosition] = useState<number[]>([0, 0]);
+  // const { updateElement } = documentDataControler
+  // const [position, setPosition] = useState<number[]>([0, 0]);
   const [view, setView] = useState<number[]>([0, 1800]);
 
 
     useEffect(() => {
         setPosition([selectedElement?.data?.startTime, selectedElement?.data?.endTime])
-    },[selectedElement])
-
-
-    useEffect(() => {
-        const tempData = {
-            ...selectedElement?.data,
-            startTime: position[0], 
-            endTime: position[1]
-          }
-        updateElement({ ...selectedElement,data: tempData})
-    },[position, selectedElement, updateElement])
+    },[selectedElement, setPosition])
+    
   const handleChange = (event: Event, newValue: number | number[]) => {
 
     setPosition(newValue as number[]);

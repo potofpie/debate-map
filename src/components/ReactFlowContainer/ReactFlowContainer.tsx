@@ -26,7 +26,7 @@ const StyledReactFlow = styled(ReactFlow)`
 export const ReactFlowContainer:FC = () => {
     const { diagramControler, documentDataControler } = useDocument()!
     const { setSelectedElement  } = diagramControler
-    const {elements, setElements} = documentDataControler    
+    const {elements, setElements, updateElement} = documentDataControler    
     const onElementsRemove = (elementsToRemove: any) => setElements((els: any) => removeElements(elementsToRemove, els));
     const onConnect = (params: any) => {
         setElements(addEdge(params, elements));
@@ -36,7 +36,6 @@ export const ReactFlowContainer:FC = () => {
 
 
     useEffect(()=>{
-        console.log(elements)
         setReceivedElements(elements)
 
     },[setReceivedElements, elements])
@@ -49,6 +48,11 @@ export const ReactFlowContainer:FC = () => {
                 onElementsRemove={onElementsRemove}
                 onConnect={onConnect}
                 onElementClick={(event: any, element: any) =>setSelectedElement(element)}
+                onNodeDragStop={(event: any, node: any) => {
+                    updateElement(node)
+                }
+                    
+            }
                 >
                 <Background
                     gap={40}

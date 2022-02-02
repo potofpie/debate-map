@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, FC } from 'react'
+import { createContext, useContext, useState,useEffect, FC } from 'react'
 import { useStore, useZoomPanHelper} from 'react-flow-renderer';
-import { elementsTemp } from '../mockdata/index'
 import { DateTime } from 'luxon';
 import stringHash from "string-hash";
 
@@ -52,7 +51,14 @@ export const DocumentProvider:FC = ({children}) => {
     const [url, setUrl] = useState<string>('https://www.youtube.com/watch?v=q6NnCiosNwE');
     const [filename, setFilename] = useState<any>('Did the titanic sink? 🚢');
     const [selectedElement, setSelectedElement] = useState<any>();
-    const [elements, setElements] = useState<any>(elementsTemp);
+    const loadedElements = JSON.parse( localStorage.getItem("elements") || "" ) 
+    const [elements, setElements] = useState<any>( loadedElements);
+
+    useEffect(() => {
+        localStorage.setItem("elements", JSON.stringify(elements)) ;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [JSON.stringify(elements)]);
+
     const clearNodePicker = () => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
         event.type === 'keydown' &&
@@ -64,14 +70,8 @@ export const DocumentProvider:FC = ({children}) => {
   
       setSelectedElement(undefined);
     };
-  
-  
-
-
-
     const { setCenter } = useZoomPanHelper();
     const store = useStore();
-    // useEffect(() => {console.log(elements)},[JSON.stringify(elements)])
     const focusNode = (curr: any) => {
         const { nodes } = store.getState();
         if (nodes.length) {
@@ -93,16 +93,16 @@ export const DocumentProvider:FC = ({children}) => {
     const findElementByID = (id: any) => elements?.filter((e: any ) => e?.id === id )[0]
     
 
-    const updateElement =(element: any) => {
-        console.log(element)
-        console.log(elements)
-        const elementIndex =  elements.findIndex((element: any) => element?.id === selectedElement?.id );
+    const updateElement =(newElement: any) => {
+        const elementIndex =  elements.findIndex((element: any) => element?.id === newElement?.id );
         const temp = elements;
         if(temp[elementIndex]){
-          temp[elementIndex].data.label = element.data.label;
-          temp[elementIndex].data.startTime = element.data.startTime;
-          temp[elementIndex].data.endTime = element.data.endTime;
-          setElements(temp);
+          temp[elementIndex].position.x = newElement.position.x
+          temp[elementIndex].position.y = newElement.position.y
+          temp[elementIndex].data.label = newElement.data.label;
+          temp[elementIndex].data.startTime = newElement.data.startTime;
+          temp[elementIndex].data.endTime = newElement.data.endTime;
+          setElements([...temp]);
         }
     
     }

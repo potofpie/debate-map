@@ -1,12 +1,12 @@
 import {FC} from 'react';
-import AppBar from '@mui/material/AppBar';
+// import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 
-import Divider from '@mui/material/Divider';
-import Toolbar from '@mui/material/Toolbar';
+// import Divider from '@mui/material/Divider';
+// import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {debate} from '../../assets';
+// import {debate} from '../../assets';
 import {useDocument} from '../../context/docmentContext'
 import { styled } from '@mui/system';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
@@ -38,10 +38,10 @@ const TitleInput = styled('input')`
 `
 
 
-const PlayButtion = styled('img')`
-    height: 35px; 
-    width: 35px; 
-`
+// const PlayButtion = styled('img')`
+//     height: 35px; 
+//     width: 35px; 
+// `
 
 export const Header:FC = () => {
     const { documentPlayerControler, documentDataControler  } = useDocument()!;

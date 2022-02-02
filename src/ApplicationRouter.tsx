@@ -1,8 +1,8 @@
 import {FC, useEffect} from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import  { ReactFlowProvider} from 'react-flow-renderer';
-import {DocumentProvider} from './context/docmentContext'
-import {AuthProvider} from './context/authContext'
+// import { ThemeProvider, createTheme } from '@mui/material/styles';
+// import  { ReactFlowProvider} from 'react-flow-renderer';
+// import {DocumentProvider} from './context/docmentContext'
+// import {AuthProvider} from './context/authContext'
 
 import {Login} from "./components/AuthenticationPages/" 
 import {
@@ -28,13 +28,13 @@ import Divider from '@mui/material/Divider';
 
 
 export const ApplicationRouter:FC = () => {
-    const { auth, user, logout  } =  useAuth()!
+    const {  user  } =  useAuth()!
 
 
 
     useEffect(()=> {
-        console.log({ login : process.env.REACT_APP_SHOULD_AUTHENTICATE && !user } )
-        console.log({ home : process.env.REACT_APP_SHOULD_AUTHENTICATE  } )
+        // console.log({ login : process.env.REACT_APP_SHOULD_AUTHENTICATE && !user } )
+        // console.log({ home : process.env.REACT_APP_SHOULD_AUTHENTICATE  } )
     },[user])
 
 

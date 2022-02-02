@@ -4,21 +4,21 @@ import  { ReactFlowProvider} from 'react-flow-renderer';
 import {DocumentProvider} from './context/docmentContext'
 import {AuthProvider} from './context/authContext'
 
-import {Login} from "./components/AuthenticationPages/" 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
+// import {Login} from "./components/AuthenticationPages/" 
+// import {
+//   BrowserRouter as Router,
+//   Routes,
+//   Route,
+//   Link
+// } from "react-router-dom";
 import { ApplicationRouter } from './ApplicationRouter'
 
-import {VideoPlayer } from './components/VideoPlayer'
-import {NodePicker} from './components/NodePicker';
-import {Header} from './components/Header';
-import { ReactFlowContainer } from './components/ReactFlowContainer';
-import {DiagramActions} from './components/DiagramActions'
-import Divider from '@mui/material/Divider';
+// import {VideoPlayer } from './components/VideoPlayer'
+// import {NodePicker} from './components/NodePicker';
+// import {Header} from './components/Header';
+// import { ReactFlowContainer } from './components/ReactFlowContainer';
+// import {DiagramActions} from './components/DiagramActions'
+// import Divider from '@mui/material/Divider';
 
 
 
